@@ -16,7 +16,7 @@ h2 {
   margin: 5px;
 }
 
-#playerBox {
+#playerBox, #playerOneCard {
   border: 1px solid black;
   height: 130px;
   width: 90px;
