@@ -7,6 +7,36 @@ body {
   text-align: center;
   min-width: 782px;
 }
+header {
+  background-color: rgb(73, 118, 64);
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 782px;
+}
+li {
+  display: inline-block;
+  margin: 5px 20px
+}
+a {
+  color: rgb(180, 180, 180);
+  font-family: 'Indie Flower', sans-serif;
+  font-size: 2em;
+}
+main {
+  background-color: rgb(52, 99, 42);
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  min-width: 782px;
+}
+#board {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  min-width: 782px;
+}
 h1 {
   margin: 0px;
   text-align: center;
@@ -41,20 +71,99 @@ h1 {
 h2 {
   text-align: center;
   color: rgb(180, 180, 180);
-  margin: 5px;
   min-width: 770px;
+  margin: 7px 0;
+  font-family: 'Slabo 27px', sans-serif;
 }
-#board {
-  display: block;
-  margin: 0 auto;
+#dealerTotal {
+  display: inline-block;
   text-align: center;
-  min-width: 782px;
+  border: 3px solid black;
+  margin: 0 auto;
+  background-color: rgb(73, 118, 64);
+  font-family: 'lobster', 'sans-serif';
+  border-radius: 8px;
+  font-size: 2em;
+}
+#dealerArea {
+  display: inline-block;
+  border: 3px solid black;
+  width: 100%;
+  margin: 0 auto 5px auto;
+  background-color: rgb(73, 118, 64);
+  font-family: 'lobster', 'sans-serif';
+  text-align: center;
+  font-size: 3em;
+  padding: 33.5px 0 33.5px 0;
+  border-radius: 8px;
+}
+.dealerCards {
+  height: 130px;
+  width: 90px;
+  position: absolute;
+}
+#dealerCard1 {
+  top: 369px;
+  left: 3px;
+}
+#dealerCard2 {
+  top: 369px;
+  left: 94px;
+}
+#dealerCard3 {
+  top: 369px;
+  left: 185px;
+}#dealerCard4 {
+  top: 369px;
+  left: 276px;
+}#dealerCard5 {
+  top: 369px;
+  left: 367px;
+}#dealerCard6 {
+  top: 369px;
+  left: 458px;
+}
+#dealerCard7 {
+  top: 369px;
+  left: 478px;
+}#dealerCard8 {
+  top: 369px;
+  left: 498px;
+}#dealerCard9 {
+  top: 369px;
+  left: 518px;
+}
+#dealerCard10 {
+  top: 369px;
+  left: 538px;
 }
 .playerArea, .chips, .totals {
   display: flex;
   margin: 0 auto;
   text-align: center;
   min-width: 782px;
+}
+.playerArea {
+  position: relative;
+}
+.playerBoxes {
+  display: inline-block;
+  border: 3px solid black;
+  height: 130px;
+  width: 90px;
+  margin: 0 auto;
+  background-color: rgb(73, 118, 64);
+}
+.circle {
+    width: 50px;
+    border: 3px solid black;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+    display: inline-block;
+    margin: 15px auto;
+    background-color: rgb(73, 118, 64);
+    font-family: 'lobster', 'sans-serif';
 }
 .totalDisplayed {
   display: inline-block;
@@ -64,66 +173,19 @@ h2 {
   font-family: 'lobster', 'sans-serif';
   font-size: 2em;
 }
-.playerBoxes {
-  display: inline-block;
-  border: 3px solid black;
-  height: 130px;
-  width: 90px;
-  margin: 0 auto;
-}
 #playerOneCard {
   height: 127px;
   width: 87px;
 }
-.circle {
-    width: 50px;
-    height: 50px;
-    border: 3px solid black;
-    -webkit-border-radius: 25px;
-    -moz-border-radius: 25px;
-    border-radius: 25px;
-    display: inline-block;
-    margin: 15px auto;
-}
-header {
-  background-color: rgb(73, 118, 64);
-  text-align: center;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  min-width: 782px;
-}
-li {
-  display: inline-block;
-  margin: 5px 20px
-}
-a {
-  color: rgb(180, 180, 180);
-  font-family: 'Indie Flower', sans-serif;
-  font-size: 2em;
-}
-#firstLink {
-  margin: 30px 30px 30px 50px
-}
-h2 {
-  margin: 20px 0;
-  font-family: 'Slabo 27px', sans-serif;
-}
+
 #bottomBar {
   background-image: url("images/black_felt.jpg");
   background-repeat: repeat-x;
   height: 20px;
   background-color: black;
-
+  border-radius: 3px;
 }
 
-main {
-  background-color: rgb(52, 99, 42);
-  display: block;
-  margin: 0 auto;
-  text-align: center;
-  min-width: 782px;
-}
 footer {
   background-color: rgb(120, 120, 120);
   height: 80px;
@@ -133,16 +195,12 @@ footer {
   font-family: 'Indie Flower', sans-serif;
   text-align: center;
   display: inline-block;
+  background-color: rgb(100, 100, 100);
+  border-radius: 10px;
+  padding: 0px 5px
 }
 a#contact {
   color: rgb(180, 180, 180);
   font-family: 'Indie Flower', sans-serif;
   font-size: 1.2em;
-}
-#madeBy {
-  text-align: center;
-  background-color: rgb(100, 100, 100);
-  border-radius: 10px;
-  padding: 0px 5px
-
 }

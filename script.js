@@ -1,41 +1,66 @@
 var totalCardsPlayed = 0;
 var playerTotal = 0;
+var dealerTotal = 0;
+var whichDealerCardToShow = 0;
+var cardsRemainingInShoe = 312;
 var haveAce = false;
+var playerOnePlaying = false;
+var playerTwoPlaying = false;
+var playerThreePlaying = false;
+var playerFourPlaying = false;
+var playerFivePlaying = false;
+$("#chipOne").on("click", function(){
+  alert("Player One Joined and Brings $500");
+  playerOneplaying = true;
+  $(this).html("$500");
+})
+$("#chipThree").on("click", function(){
+  alert("Player Three Joined and Brings $500");
+  playerThreePlaying = true;
+  $(this).html("$500");
+})
 $("#playerThree").on("click", function(){
-  $("#playerThree").empty();
-  if(shoeOfSixDecks[totalCardsPlayed] > 36) {
-    playerTotal += 10;
-  }
-  else if(shoeOfSixDecks[totalCardsPlayed] < 5) {
-    if(playerTotal > 10) {
-      playerTotal += 1;
-    }
-    else {
-      playerTotal += 11;
-      haveAce = true;
-    }
+  if(playerThreePlaying === false) {
+    alert("This player is not sitting at the table. Click sit to join");
   }
   else{
-    var playerPoints = Math.ceil(shoeOfSixDecks[totalCardsPlayed] / 4);
-    playerTotal += playerPoints;
-  }
-  var whichNumber = shoeOfSixDecks[totalCardsPlayed] + ".png";
-  console.log(whichNumber);
-  $("#playerThree").append('<img id="playerOneCard"src="playing_cards/'+whichNumber+'" />')
-  totalCardsPlayed++;
-  if(playerTotal > 21) {
-    if( haveAce === false) {
-      $("#totalThree").html("BUST!");
-      playerTotal = 0;
+    $("#playerThree").empty();
+    cardsRemainingInShoe--;
+    $("#shoeCounter").html(cardsRemainingInShoe);
+    if(shoeOfSixDecks[totalCardsPlayed] > 36) {
+      playerTotal += 10;
+    }
+    else if(shoeOfSixDecks[totalCardsPlayed] < 5) {
+      if(playerTotal > 10) {
+        playerTotal += 1;
+      }
+      else {
+        playerTotal += 11;
+        haveAce = true;
+      }
+    }
+    else{
+      var playerPoints = Math.ceil(shoeOfSixDecks[totalCardsPlayed] / 4);
+      playerTotal += playerPoints;
+    }
+    var whichNumber = shoeOfSixDecks[totalCardsPlayed] + ".png";
+    //console.log(whichNumber);
+    $("#playerThree").append('<img id="playerOneCard"src="playing_cards/'+whichNumber+'" />')
+    totalCardsPlayed++;
+    if(playerTotal > 21) {
+      if( haveAce === false) {
+        $("#totalThree").html("BUST!");
+        playerTotal = 0;
+      }
+      else {
+        playerTotal -= 10;
+        haveAce = false;
+        $("#totalThree").html(playerTotal)
+      }
     }
     else {
-      playerTotal -= 10;
-      haveAce = false;
-      $("#totalThree").html(playerTotal)
+      $("#totalThree").html(playerTotal);
     }
-  }
-  else {
-    $("#totalThree").html(playerTotal)
   }
 })
 function shuffleCards(array) { //fisher Yates Shuffle
@@ -54,7 +79,53 @@ for(var i = 1; i < 417; i++) {
 shuffleCards(arrayOfPlayingCards);
 arrayOfPlayingCards = arrayOfPlayingCards.map(divideByEightAndRoundUp);
 var shoeOfSixDecks = arrayOfPlayingCards.slice(0,312);
-console.log(shoeOfSixDecks);
 function divideByEightAndRoundUp(input) {
   return Math.ceil(input / 8);
 }
+function dealersTurn() {
+  dealerTotal = 0;
+  whichDealerCardToShow = 0;
+  for(var i = 0; i < 10; i++) {
+    $("#dealerArea").children(".dealerCards").eq(i).empty();
+  }
+  while(dealerTotal < 17) {
+    if(shoeOfSixDecks[totalCardsPlayed] > 36) {
+      dealerTotal += 10;
+    }
+    else if(shoeOfSixDecks[totalCardsPlayed] < 5) {
+      if(dealerTotal > 10) {
+        dealerTotal += 1;
+      }
+      else {
+        dealerTotal += 11;
+        haveAce = true;
+      }
+    }
+    else{
+      var dealerPoints = Math.ceil(shoeOfSixDecks[totalCardsPlayed] / 4);
+      dealerTotal += dealerPoints;
+    }
+    var whichCardToAdd = shoeOfSixDecks[totalCardsPlayed] + ".png";
+    $("#dealerArea").children(".dealerCards").eq(whichDealerCardToShow).append('<img src="playing_cards/'+whichCardToAdd+'" height="127px" width="87px"/>')
+    totalCardsPlayed++;
+    if(whichDealerCardToShow < 8) {
+      whichDealerCardToShow++;
+    }
+    if(dealerTotal > 21) {
+      if( haveAce === false) {
+        $("#dealerTotal").html("Dealer Total: BUST!");
+      }
+      else {
+        dealerTotal -= 10;
+        haveAce = false;
+        $("#dealerTotal").html("Dealer Total: " + dealerTotal);
+      }
+    }
+    else {
+      $("#dealerTotal").html("Dealer Total: " + dealerTotal);
+    }
+    cardsRemainingInShoe--;
+  }
+  $("#shoeCounter").html(cardsRemainingInShoe);
+}
+$("#dealerArea").on("click", dealersTurn);
