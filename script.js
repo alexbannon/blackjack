@@ -19,7 +19,7 @@ $("#playerThree").on("click", function(){
   }
   console.log(playerTotal);
 })
-function shuffleCards(array) {
+function shuffleCards(array) { //fisher Yates Shuffle
   for(var i = array.length - 1; i > 0; i--) {
     var pickRandomIndex = Math.floor(Math.random() * (i + 1));
     var holdValueToSwitchWithRandomIndexLater = array[i];
