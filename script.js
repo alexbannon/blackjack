@@ -1,9 +1,23 @@
 var clickCounter = 0;
-$("#playerBox").on("click", function(){
-  $("#playerBox").empty();
+var playerTotal = 0;
+$("#playerThree").on("click", function(){
+  $("#playerThree").empty();
+  if(shoeOfSixDecks[clickCounter] > 36) {
+    playerTotal += 10;
+  }
+  else{
+    var playerPoints = Math.ceil(shoeOfSixDecks[clickCounter] / 4);
+    playerTotal += playerPoints;
+  }
   var whichNumber = shoeOfSixDecks[clickCounter] + ".png";
-  $("#playerBox").append('<img id="playerOneCard"src="playing_cards/'+whichNumber+'" />')
+  console.log(whichNumber);
+  $("#playerThree").append('<img id="playerOneCard"src="playing_cards/'+whichNumber+'" />')
   clickCounter++;
+  if(playerTotal > 21) {
+    alert("Bust!");
+    playerTotal = 0;
+  }
+  console.log(playerTotal);
 })
 function shuffleCards(array) {
   for(var i = array.length - 1; i > 0; i--) {
