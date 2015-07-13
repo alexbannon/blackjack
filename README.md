@@ -1,5 +1,5 @@
-# blackjack
-A game of blackjack
+# A game of blackjack
+
 User Stories:
 
 - I want the ability to click start a game and have multiple decks shuffle so I can play multiple rounds.
