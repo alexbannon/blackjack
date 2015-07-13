@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link href='http://fonts.googleapis.com/css?family=Slabo+27px' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
   <meta charset="UTF-8">
@@ -10,23 +11,47 @@
 <body>
   <header>
     <nav>
-      <li><a href="#">Home</a></li>
       <li><a>Blackjack</a></li>
+      <li><a href="#">Placeholder</a></li>
       <li><a href="ticTacToe/index.html">Tic-Tac-Toe</a></li>
     </nav>
   </header>
-  <div id= "container">
-  <h1>Blackjack</h1>
-  <h2>Pays 3 to 2</h2>
-  <div class="container">
-    <div class="playerBoxes" id="playerOne"></div>
-    <div class="playerBoxes" id="playerTwo"></div>
-    <div class="playerBoxes" id="playerThree"></div>
-    <div class="playerBoxes" id="playerFour"></div>
-    <div class="playerBoxes" id="playerFive"></div>
+  <main>
+  <div id= "board">
+    <h1>Blackjack</h1>
+    <div id = "dealerChipsAndShoe">
+      <img id="dealerChips" src="images/dealer_chips.png">
+        <div id="shoeHeader">Cards Remaining in Shoe:</div>
+        <div id="shoeCounter">500</div>
+    </div>
+    <h2>Blackjack Pays 3 to 2</h2>
+    <h2 id="bottomOfDealerText">Dealer Must Stand On 17 and Draw on 16</h2>
+    <div class="playerArea">
+      <div class="playerBoxes" id="playerOne"></div>
+      <div class="playerBoxes" id="playerTwo"></div>
+      <div class="playerBoxes" id="playerThree"></div>
+      <div class="playerBoxes" id="playerFour"></div>
+      <div class="playerBoxes" id="playerFive"></div>
+    </div>
+    <div class="chips">
+      <div class="circle" id="chipOne"></div>
+      <div class="circle" id="chipTwo"></div>
+      <div class="circle" id="chipThree"></div>
+      <div class="circle" id="chipFour"></div>
+      <div class="circle" id="chipFive"></div>
+    </div>
+    <div class="totals">
+      <div class="totalDisplayed" id="totalOne"></div>
+      <div class="totalDisplayed" id="totalTwo"></div>
+      <div class="totalDisplayed" id="totalThree"></div>
+      <div class="totalDisplayed" id="totalFour"></div>
+      <div class="totalDisplayed" id="totalFive"></div>
   </div>
-  <div class="circle"></div>
-  </div>
+  </main>
+  <footer>
+    <div id="bottomBar"></div>
+    <p id="madeBy">Made by <a href="mailto:alexbannon@gmail.com" id="contact">Alex Bannon</a></p>
+  </footer>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script src="script.js"></script>
 </body>

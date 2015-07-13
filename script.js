@@ -1,23 +1,42 @@
-var clickCounter = 0;
+var totalCardsPlayed = 0;
 var playerTotal = 0;
+var haveAce = false;
 $("#playerThree").on("click", function(){
   $("#playerThree").empty();
-  if(shoeOfSixDecks[clickCounter] > 36) {
+  if(shoeOfSixDecks[totalCardsPlayed] > 36) {
     playerTotal += 10;
   }
+  else if(shoeOfSixDecks[totalCardsPlayed] < 5) {
+    if(playerTotal > 10) {
+      playerTotal += 1;
+    }
+    else {
+      playerTotal += 11;
+      haveAce = true;
+    }
+  }
   else{
-    var playerPoints = Math.ceil(shoeOfSixDecks[clickCounter] / 4);
+    var playerPoints = Math.ceil(shoeOfSixDecks[totalCardsPlayed] / 4);
     playerTotal += playerPoints;
   }
-  var whichNumber = shoeOfSixDecks[clickCounter] + ".png";
+  var whichNumber = shoeOfSixDecks[totalCardsPlayed] + ".png";
   console.log(whichNumber);
   $("#playerThree").append('<img id="playerOneCard"src="playing_cards/'+whichNumber+'" />')
-  clickCounter++;
+  totalCardsPlayed++;
   if(playerTotal > 21) {
-    alert("Bust!");
-    playerTotal = 0;
+    if( haveAce === false) {
+      $("#totalThree").html("BUST!");
+      playerTotal = 0;
+    }
+    else {
+      playerTotal -= 10;
+      haveAce = false;
+      $("#totalThree").html(playerTotal)
+    }
   }
-  console.log(playerTotal);
+  else {
+    $("#totalThree").html(playerTotal)
+  }
 })
 function shuffleCards(array) { //fisher Yates Shuffle
   for(var i = array.length - 1; i > 0; i--) {

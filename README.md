@@ -9,4 +9,3 @@ User Stories:
 - I want the ability to play without interruption, even when the amount of shuffled cards runs out.
 - I want the ability to have my running total displayed.
 - I want the ability to know when I bust, aka go over 21, and for the action to automatically continue.
-- 
