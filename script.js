@@ -9,6 +9,34 @@ var playerTwoPlaying = false;
 var playerThreePlaying = false;
 var playerFourPlaying = false;
 var playerFivePlaying = false;
+function addChips() {
+  if(event.target.className == "circle") {
+    if($(event.target).children(0).is(":checked") === false) {
+      var userBrings = prompt("How Much Do You Want To Bring To The Table?", "500");
+      while(userBrings % 10 !== 0) {
+        userBrings = prompt("Sorry. Only $10 chips are available at this table. Please bring a multiple of 10", "500");
+      }
+      if(userBrings === null) {
+      }
+      else {
+        var whichPlayer = parseInt($(event.target).children(0).attr("id"));
+        $("#bet"+whichPlayer).html('$50<div id="stand'+whichPlayer+'">Stand</div><div id="double'+whichPlayer+'">Double</div>');
+        $(event.target).html("$"+userBrings);
+        $(event.target).append('<input class = "isPlayer" id="'+whichPlayer+'" type="checkbox" name="isPlaying" value="isPlaying" checked>')
+      }
+    }
+    else {
+      var userLeavingGame = prompt("Do You Want To Leave The Game?", "yes").toLowerCase();
+      if(userLeavingGame === "yes" || userLeavingGame === "y"){
+        var whichPlayer = parseInt($(event.target).children(0).attr("id"));
+        $(event.target).html("Sit");
+        $(event.target).append('<input class = "isPlayer" id="'+whichPlayer+'" type="checkbox" name="isPlaying" value="isPlaying">')
+        $("#bet"+whichPlayer).html('Vacant<div id="stand'+whichPlayer+'">Stand</div><div id="double'+whichPlayer+'">Double</div>');
+      }
+    }
+  }
+}
+
 $(".chips").on("click", function(){
   if(event.target.className == "circle") {
     if($(event.target).children(0).is(":checked") === false) {
@@ -19,21 +47,52 @@ $(".chips").on("click", function(){
       if(userBrings === null) {
       }
       else {
+        var whichPlayer = parseInt($(event.target).children(0).attr("id"));
+        var whichBetId = "";
+        for(var i = 0; i < whichPlayer; i++){
+          whichBetId += "I";
+        }
+        $("#bet"+whichPlayer).html('$50<input class = "isPlayer" id="'+whichBetId+'" type="checkbox" name="isPlaying" value="isPlaying"><div id="stand'+whichPlayer+'">Stand</div><div id="double'+whichPlayer+'">Double</div>');
         $(event.target).html("$"+userBrings);
-        $(event.target).append("<input type='checkbox' value='isPlaying' class='isPlayer' checked>")
+        $(event.target).append('<input class = "isPlayer" id="'+whichPlayer+'" type="checkbox" name="isPlaying" value="isPlaying" checked>')
       }
     }
     else {
       var userLeavingGame = prompt("Do You Want To Leave The Game?", "yes").toLowerCase();
       if(userLeavingGame === "yes" || userLeavingGame === "y"){
-        $(event.target).html("sit");
-        $(event.target).append("<input type='checkbox' value='isPlaying' class='isPlayer'>")
+        var whichPlayer = parseInt($(event.target).children(0).attr("id"));
+        $(event.target).html("Sit");
+        $(event.target).append('<input class = "isPlayer" id="'+whichPlayer+'" type="checkbox" name="isPlaying" value="isPlaying">')
+        $("#bet"+whichPlayer).html('Vacant<div id="stand'+whichPlayer+'">Stand</div><div id="double'+whichPlayer+'">Double</div>');
       }
     }
   }
 })
-$("#playerThree").on("click", function(){
-  if(playerThreePlaying === false) {
+$(".betAmount").on("click", function(){
+  if(event.target.className == "betNoMargin") {
+    var whatsInBetString = $(event.target).text();
+    if(whatsInBetString.indexOf("Vacant") > -1) {
+      alert("Click sit to join game!");
+    }
+    else {
+      var whichPlayer = $(event.target).children().eq(0).attr("id").length;
+      var storeId = $(event.target).children().eq(0).attr("id");
+      console.log(whichPlayer);
+      var changeBetAmount = prompt("How much would you like to bet per round? Only multiples of 10 please!", "50");
+      while(changeBetAmount % 10 !== 0) {
+        var changeBetAmount = prompt("Sorry. Only bet amounts that are multiples of 10 are allowed", "50");
+      }
+      if(changeBetAmount === null) {
+      }
+      else {
+        $(event.target).html('$'+changeBetAmount+'<input class = "isPlayer" id="'+storeId+'" type="checkbox" name="isPlaying" value="isPlaying"><div id="stand'+whichPlayer+'">Stand</div><div id="double'+whichPlayer+'">Double</div>');
+      }
+
+    }
+  }
+})
+/*$("#playerThree").on("click", function(){
+  if($(".isPLaying").is(":checked") === false) {
     alert("This player is not sitting at the table. Click sit to join");
   }
   else{
@@ -58,7 +117,7 @@ $("#playerThree").on("click", function(){
     }
     var whichNumber = shoeOfSixDecks[totalCardsPlayed] + ".png";
     //console.log(whichNumber);
-    $("#playerThree").append('<img id="playerOneCard"src="playing_cards/'+whichNumber+'" />')
+    $("#playerThree").append('<img id="playerCard"src="playing_cards/'+whichNumber+'" />')
     totalCardsPlayed++;
     if(playerTotal > 21) {
       if( haveAce === false) {
@@ -76,6 +135,7 @@ $("#playerThree").on("click", function(){
     }
   }
 })
+*/
 function shuffleCards(array) { //fisher Yates Shuffle
   for(var i = array.length - 1; i > 0; i--) {
     var pickRandomIndex = Math.floor(Math.random() * (i + 1));

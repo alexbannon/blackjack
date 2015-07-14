@@ -13,7 +13,7 @@ header {
   margin: 0;
   padding: 0;
   border: 0;
-  min-width: 782px;
+  min-width: 1017px;
 }
 li {
   display: inline-block;
@@ -29,20 +29,20 @@ main {
   display: block;
   margin: 0 auto;
   text-align: center;
-  min-width: 782px;
+  min-width: 1017px;
 }
 #board {
   display: block;
   margin: 0 auto;
   text-align: center;
-  min-width: 782px;
+  min-width: 1017px;
 }
 h1 {
   margin: 0px;
   text-align: center;
   font-family: 'lobster', 'sans-serif';
   color: rgb(180, 180, 180);
-  min-width: 782px;
+  min-width: 1017px;
 }
 #dealerChipsAndShoe {
   position: relative;
@@ -71,7 +71,7 @@ h1 {
 h2 {
   text-align: center;
   color: rgb(180, 180, 180);
-  min-width: 770px;
+  min-width: 1017px;
   margin: 7px 0;
   font-family: 'Slabo 27px', sans-serif;
 }
@@ -90,7 +90,6 @@ h2 {
   display: inline-block;
   border: 3px solid black;
   width: 100%;
-  max-width: 1024px;
   margin: 0 auto 5px auto;
   background-color: rgb(73, 118, 64);
   font-family: 'lobster', 'sans-serif';
@@ -150,12 +149,11 @@ h2 {
 .isPlayer {
   display: none;
 }
-.playerArea, .chips, .totals, .betAmount, .splitContainer {
+.playerArea, .chips, .totals, .betAmount, .splitContainer, .PlayerNumber {
   display: flex;
   margin: 0 auto;
   text-align: center;
-  min-width: 782px;
-  max-width: 1024px;
+  min-width: 1017px;
 }
 .playerArea {
   position: relative;
@@ -167,6 +165,36 @@ h2 {
   width: 90px;
   margin: 0 auto;
   background-color: rgb(73, 118, 64);
+  position: relative;
+}
+.playerOne, .playerTwo, .playerThree, .playerFour, .playerFive {
+  display: inline-block;
+  border: 3px solid black;
+  height: 130px;
+  width: 90px;
+  margin: 0 auto;
+  background-color: rgb(73, 118, 64);
+  position: relative;
+}
+.extraBoxes {
+  position: absolute;
+  height: 130px;
+  width: 90px;
+}
+#playerOneBoxOne, #playerTwoBoxOne, #playerThreeBoxOne, #playerFourBoxOne, #playerFiveBoxOne {
+  left: -33px;
+}
+#playerOneBoxTwo, #playerTwoBoxTwo, #playerThreeBoxTwo, #playerFourBoxTwo, #playerFiveBoxTwo {
+  left: -12px;
+}
+#playerOneBoxThree, #playerTwoBoxThree, #playerThreeBoxThree, #playerFourBoxThree, #playerFiveBoxThree {
+  left: 9px;
+}
+#playerOneBoxFour, #playerTwoBoxFour, #playerThreeBoxFour, #playerFourBoxFour, #playerFiveBoxFour {
+  left: 30px;
+}
+#playerOneBoxFive, #playerTwoBoxFive, #playerThreeBoxFive, #playerFourBoxFive, #playerFiveBoxFive {
+  left: 51px;
 }
 .betNoMargin {
   width: 80px;
@@ -180,7 +208,7 @@ h2 {
   font-family: 'lobster', 'sans-serif';
   position: relative;
 }
-#standOne, #doubleOne, #standTwo, #doubleTwo, #standThree, #doubleThree, #standFour, #doubleFour, #standFive, #doubleFive {
+#stand1, #double1, #stand2, #double2, #stand3, #double3, #stand4, #double4, #stand5, #double5 {
   position: absolute;
   background-color: rgb(73, 118, 64);
   border: 3px solid black;
@@ -190,10 +218,10 @@ h2 {
   width: 55px;
   bottom: 53px;
 }
-#doubleOne, #doubleTwo, #doubleThree, #doubleFour, #doubleFive {
+#double1, #double2, #double3, #double4, #double5 {
   left: 37px;
 }
-#standOne, #standTwo, #standThree, #standFour, #standFive {
+#stand1, #stand2, #stand3, #stand4, #stand5 {
   left: -20px;
 }
 
@@ -224,7 +252,7 @@ h2 {
   font-family: 'lobster', 'sans-serif';
   font-size: 2em;
 }
-#playerOneCard {
+#playerCard {
   height: 127px;
   width: 87px;
 }
@@ -241,6 +269,7 @@ footer {
   background-color: rgb(120, 120, 120);
   height: 80px;
   text-align: center;
+  min-width: 1017px;
 }
 #madeBy {
   font-family: 'Indie Flower', sans-serif;
