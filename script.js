@@ -9,15 +9,28 @@ var playerTwoPlaying = false;
 var playerThreePlaying = false;
 var playerFourPlaying = false;
 var playerFivePlaying = false;
-$("#chipOne").on("click", function(){
-  alert("Player One Joined and Brings $500");
-  playerOneplaying = true;
-  $(this).html("$500");
-})
-$("#chipThree").on("click", function(){
-  alert("Player Three Joined and Brings $500");
-  playerThreePlaying = true;
-  $(this).html("$500");
+$(".chips").on("click", function(){
+  if(event.target.className == "circle") {
+    if($(event.target).children(0).is(":checked") === false) {
+      var userBrings = prompt("How Much Do You Want To Bring To The Table?", "500");
+      while(userBrings % 10 !== 0) {
+        userBrings = prompt("Sorry. Only $10 chips are available at this table. Please bring a multiple of 10", "500");
+      }
+      if(userBrings === null) {
+      }
+      else {
+        $(event.target).html("$"+userBrings);
+        $(event.target).append("<input type='checkbox' value='isPlaying' class='isPlayer' checked>")
+      }
+    }
+    else {
+      var userLeavingGame = prompt("Do You Want To Leave The Game?", "yes").toLowerCase();
+      if(userLeavingGame === "yes" || userLeavingGame === "y"){
+        $(event.target).html("sit");
+        $(event.target).append("<input type='checkbox' value='isPlaying' class='isPlayer'>")
+      }
+    }
+  }
 })
 $("#playerThree").on("click", function(){
   if(playerThreePlaying === false) {
