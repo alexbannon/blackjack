@@ -267,7 +267,7 @@ function playersStart() { //good
             playerFourAces++;
           }
           if(i === 2) {
-            playerThreeAce++;
+            playerThreeAces++;
           }
           if(i === 1) {
             playerTwoAces++;
@@ -324,6 +324,9 @@ function hitMe() {
   whichPlayer = $(this).index();
   playerTotal = parseInt($(".totals").children().eq(whichPlayer).html());
   addValueOfPlayerCard();
+  totalCardsPlayed++;
+  cardsRemainingInShoe--;
+  $("#shoeCounter").html(cardsRemainingInShoe);
   if(playerTotal > 21) {
     if(whichPlayer === 4) {
       if(playerFiveAces === 0) {
@@ -333,13 +336,14 @@ function hitMe() {
         playerFivePlaying = false;
         $("#turnFive").empty();
         whichUserCard = 2;
+        whoIsPlaying();
       }
       else{
         playerTotal -= 10;
         playerFiveAces--;
         $(".totals").children().eq(whichPlayer).html(playerTotal);
+        whichUserCard++;
       }
-      whoIsPlaying();
     }
     if(whichPlayer === 3) {
       if(playerFourAces === 0) {
@@ -349,13 +353,15 @@ function hitMe() {
         playerFourPlaying = false;
         $("#turnFour").empty();
         whichUserCard = 2;
+        whoIsPlaying();
       }
       else{
         playerTotal -= 10;
         playerFiveAces--;
         $(".totals").children().eq(whichPlayer).html(playerTotal);
+        whichUserCard++;
+
       }
-      whoIsPlaying();
     }
     if(whichPlayer === 2) {
       if(playerThreeAces === 0) {
@@ -365,13 +371,14 @@ function hitMe() {
         playerThreePlaying = false;
         $("#turnThree").empty();
         whichUserCard = 2;
+        whoIsPlaying();
       }
       else{
         playerTotal -= 10;
         playerFiveAces--;
         $(".totals").children().eq(whichPlayer).html(playerTotal);
+        whichUserCard++;
       }
-      whoIsPlaying();
     }
     if(whichPlayer === 1) {
       if(playerFiveAces === 0) {
@@ -381,13 +388,14 @@ function hitMe() {
         playerTwoPlaying = false;
         $("#turnTwo").empty();
         whichUserCard = 2;
+        whoIsPlaying();
       }
       else{
         playerTotal -= 10;
         playerFiveAces--;
         $(".totals").children().eq(whichPlayer).html(playerTotal);
+        whichUserCard++;
       }
-      whoIsPlaying();
     }
     if(whichPlayer === 0) {
       if(playerFiveAces === 0) {
@@ -397,22 +405,20 @@ function hitMe() {
         playerOnePlaying = false;
         $("#turnOne").empty();
         whichUserCard = 2;
+        whoIsPlaying();
       }
       else{
         playerTotal -= 10;
         playerFiveAces--;
         $(".totals").children().eq(whichPlayer).html(playerTotal);
+        whichUserCard++;
       }
-      whoIsPlaying();
     }
   }
   else{
     $(".totals").children().eq(whichPlayer).html(playerTotal);
+    whichUserCard++;
   }
-  totalCardsPlayed++;
-  whichUserCard++;
-  cardsRemainingInShoe--;
-  $("#shoeCounter").html(cardsRemainingInShoe);
 }
 function stand() {
   console.log("stand!");
@@ -551,20 +557,22 @@ function areAllFiveDone() {
   if(playerOnePlaying === true || playerTwoPlaying === true || playerThreePlaying === true || playerFourPlaying === true || playerFivePlaying === true){
     whoIsPlaying();
   }
-  if($("#totalOne").html() === ""){
-    if($("#totalTwo").html() === ""){
-      if($("#totalThree").html() === ""){
-        if($("#totalFour").html() === ""){
-          if($("#totalFive").html() === ""){}
-          else if($("#totalFive").html() === "Blackjack!"){whoIsPlaying();}
+  else{
+    if($("#totalOne").html() === ""){
+      if($("#totalTwo").html() === ""){
+        if($("#totalThree").html() === ""){
+          if($("#totalFour").html() === ""){
+            if($("#totalFive").html() === ""){}
+            else if($("#totalFive").html() === "Blackjack!"){whoIsPlaying();}
+          }
+          else if($("#totalFour").html() === "Blackjack!"){whoIsPlaying();}
         }
-        else if($("#totalFour").html() === "Blackjack!"){whoIsPlaying();}
+        else if($("#totalThree").html() === "Blackjack!"){whoIsPlaying();}
       }
-      else if($("#totalThree").html() === "Blackjack!"){whoIsPlaying();}
+      else if($("#totalTwo").html() === "Blackjack!"){whoIsPlaying();}
     }
-    else if($("#totalTwo").html() === "Blackjack!"){whoIsPlaying();}
+    else if($("#totalOne").html() === "Blackjack!"){whoIsPlaying();}
   }
-  else if($("#totalOne").html() === "Blackjack!"){whoIsPlaying();}
 }
 function startGame() {
 $("#startRound").off("click", startGame);
@@ -577,7 +585,6 @@ playersStart();
 dealerStarts();
 whoIsPlaying();
 areAllFiveDone();
-return;
 }
 function dealerFinishes() {
 if(dealerTotal === 21){}
@@ -639,13 +646,7 @@ function addValueOfPlayerCard() {
     playerTotal += 10;
   }
   else if(shoeOfSixDecks[totalCardsPlayed] < 5) {
-    if(playerTotal > 10) {
-      playerTotal += 1;
-    }
-    else {
-      playerTotal += 11;
-      howManyPlayerAces++;
-    }
+    playerTotal += 11;
   }
   else{
     var playerPoints = Math.ceil(shoeOfSixDecks[totalCardsPlayed] / 4);
