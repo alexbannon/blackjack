@@ -1,9 +1,36 @@
+//shuffle Algorithm using Fisher Yates Shuffle
+function shuffleCards(array) { //fisher Yates Shuffle
+  for(var i = array.length - 1; i > 0; i--) {
+    var pickRandomIndex = Math.floor(Math.random() * (i + 1));
+    var holdValueToSwitchWithRandomIndexLater = array[i];
+    array[i] = array[pickRandomIndex]; //switch out array[i] with new value, randomly chosen
+    array[pickRandomIndex] = holdValueToSwitchWithRandomIndexLater; // Put switched out value back into array at this iterations random index choice
+  }
+  return array;
+}
+var arrayOfPlayingCards = [];
+for(var i = 1; i < 417; i++) {
+  arrayOfPlayingCards.push(i);
+}
+function divideByEightAndRoundUp(input) {
+  return Math.ceil(input / 8);
+}
+shuffleCards(arrayOfPlayingCards);
+arrayOfPlayingCards = arrayOfPlayingCards.map(divideByEightAndRoundUp);
+var shoeOfSixDecks = arrayOfPlayingCards.slice(0,312);
+//initial variables
 var totalCardsPlayed = 0;
 var playerTotal = 0;
+var playerOneTotal = 0;
+var playerTwoTotal = 0;
+var playerThreeTotal = 0;
+var playerFourTotal = 0;
+var playerFiveTotal = 0;
 var dealerTotal = 0;
 var whichDealerCardToShow = 0;
+var whichUserCard = 2;
 var cardsRemainingInShoe = 312;
-var haveAce = false;
+var howManyAces = 0;
 var playerOnePlaying = false;
 var playerTwoPlaying = false;
 var playerThreePlaying = false;
@@ -100,25 +127,10 @@ $(".betAmount").on("click", function(){
     }
   }
 })
-function shuffleCards(array) { //fisher Yates Shuffle
-  for(var i = array.length - 1; i > 0; i--) {
-    var pickRandomIndex = Math.floor(Math.random() * (i + 1));
-    var holdValueToSwitchWithRandomIndexLater = array[i];
-    array[i] = array[pickRandomIndex]; //switch out array[i] with new value, randomly chosen
-    array[pickRandomIndex] = holdValueToSwitchWithRandomIndexLater; // Put switched out value back into array at this iterations random index choice
-  }
-  return array;
-}
-var arrayOfPlayingCards = [];
-for(var i = 1; i < 417; i++) {
-  arrayOfPlayingCards.push(i);
-}
 
-function divideByEightAndRoundUp(input) {
-  return Math.ceil(input / 8);
-}
-function dealerStarts() {
+function dealerStarts() { //good
   dealerTotal = 0;
+  howManyAces = 0;
   for(var i = 0; i < 10; i++) {
     $("#dealerArea").children(".dealerCards").eq(i).empty();
   }
@@ -135,8 +147,9 @@ function dealerStarts() {
   $("#dealerCard2Blank").css("visibility", "visible");
   totalCardsPlayed++;
   cardsRemainingInShoe--;
+  $("#shoeCounter").html(cardsRemainingInShoe);
 }
-function playersStart() {
+function playersStart() { //good
   for(var i = 4; i >= 0; i--){
     playerTotal = 0;
     var isPlayerSitting = $(".chips").children().eq(i).text();
@@ -146,6 +159,21 @@ function playersStart() {
         $(".playerArea").children().eq(i).children().empty();
       }
       else {
+        if(i === 4) {
+          playerFivePlaying = true;
+        }
+        if(i === 3) {
+          playerFourPlaying = true;
+        }
+        if(i === 2) {
+          playerThreePlaying = true;
+        }
+        if(i === 1) {
+          playerTwoPlaying = true;
+        }
+        if(i === 0) {
+          playerOnePlaying = true;
+        }
         $(".playerArea").children().eq(i).children().empty();
         var whichCardToAdd = shoeOfSixDecks[totalCardsPlayed] + ".png";
         addValueOfPlayerCard();
@@ -167,99 +195,147 @@ function playersStart() {
       }
   }
 }
-function playersContinue() {
-  for(var i = 4; i >= 0; i--){
-    var isPlayerSitting = $(".chips").children().eq(i).text();
-      if(isPlayerSitting.indexOf("Sit") > -1) {
+function hitMe() {
+  var whichNumber = shoeOfSixDecks[totalCardsPlayed] + ".png";
+  if(whichUserCard < 4) {
+  $(this).children().eq(whichUserCard).append('<img id="playerCard"src="playing_cards/'+whichNumber+'" />')
+  }
+  if(whichUserCard === 4) {
+    $(this).children().eq(whichUserCard).empty();
+    $(this).children().eq(whichUserCard).append('<img id="playerCard"src="playing_cards/'+whichNumber+'" />')
+    whichUserCard--;
+  }
+  whichPlayer = $(this).index();
+  playerTotal = parseInt($(".totals").children().eq(whichPlayer).html());
+  addValueOfPlayerCard();
+  $(".totals").children().eq(whichPlayer).html(playerTotal);
+  totalCardsPlayed++;
+  whichUserCard++;
+  cardsRemainingInShoe--;
+  $("#shoeCounter").html(cardsRemainingInShoe);
+}
+function stand() {
+  whichUserCard = 2;
+  var thisPlayer = $(this).parent().children().eq(0).attr("id").length;
+  if(thisPlayer === 5) {
+    playerFivePlaying = false;
+    $(".playerArea").children().eq(4).off("click", hitMe);
+  }
+  if(thisPlayer === 4) {
+    playerFourPlaying = false;
+    $(".playerArea").children().eq(3).off("click", hitMe);
+  }
+  if(thisPlayer === 3) {
+    playerThreePlaying = false;
+    $(".playerArea").children().eq(2).off("click", hitMe);
+  }
+  if(thisPlayer === 2) {
+    playerTwoPlaying = false;
+    $(".playerArea").children().eq(1).off("click", hitMe);
+  }
+  if(thisPlayer === 1) {
+    playerOnePlaying = false;
+    $(".playerArea").children().eq(0).off("click", hitMe);
+  }
+  whoIsPlaying();
+}
+// $("#stand5").on("click", stand);
+// $("#stand4").on("click", stand);
+// $("#stand3").on("click", stand);
+// $("#stand2").on("click", stand);
+// $("#stand1").on("click", stand);
+
+function whoIsPlaying() {
+  if(playerFivePlaying === true) {
+    $(".playerArea").children().eq(4).on("click", hitMe);
+    $("#stand5").on("click", stand);
+  }
+  else {
+    if(playerFourPlaying === true) {
+      $(".playerArea").children().eq(3).on("click", hitMe);
+      $("#stand4").on("click", stand);
+    }
+    else {
+      if(playerThreePlaying === true) {
+        $(".playerArea").children().eq(2).on("click", hitMe);
+        $("#stand3").on("click", stand);
       }
       else {
-        //while user has not hit sit ...
-        $(".playerArea").children().eq(i).on("click", function(){
-          playerTotal = parseInt($(".totalDisplayed").eq(i).html())
-          cardsRemainingInShoe--;
-          $("#shoeCounter").html(cardsRemainingInShoe);
-          if(shoeOfSixDecks[totalCardsPlayed] > 36) {
-            playerTotal += 10;
-          }
-          else if(shoeOfSixDecks[totalCardsPlayed] < 5) {
-            if(playerTotal > 10) {
-              playerTotal += 1;
-            }
-            else {
-              playerTotal += 11;
-              haveAce = true;
-            }
-          }
-          else{
-            var playerPoints = Math.ceil(shoeOfSixDecks[totalCardsPlayed] / 4);
-            playerTotal += playerPoints;
-          }
-          var whichNumber = shoeOfSixDecks[totalCardsPlayed] + ".png";
-          var whichCardSlot = 2;
-          $(".playerArea").children().eq(i).children().eq(whichCardSlot).append('<img id="playerCard"src="playing_cards/'+whichNumber+'" />')
-          totalCardsPlayed++;
-          whichCardSlot++;
-          if(playerTotal > 21) {
-            if( haveAce === false) {
-              $(".totalDisplayed").eq(i).html("BUST!");
-              playerTotal = 0;
-            }
-            else {
-              playerTotal -= 10;
-              haveAce = false;
-              $(".totalDisplayed").eq(i).html(playerTotal)
-            }
+        if(playerTwoPlaying === true) {
+          $(".playerArea").children().eq(1).on("click", hitMe);
+          $("#stand2").on("click", stand);
+        }
+        else {
+          if(playerOnePlaying === true) {
+            $(".playerArea").children().eq(0).on("click", hitMe);
+            $("#stand1").on("click", stand);
           }
           else {
-            $(".totalDisplayed").eq(i).html(playerTotal);
+            dealerFinishes();
+            if($("#totalOne").html() !== ""){
+              playerOneTotal = parseInt($("#totalOne").html());
+            }
+            if($("#totalTwo").html() !== ""){
+              playerTwoTotal = parseInt($("#totalTwo").html());
+            }
+            if($("#totalThree").html() !== ""){
+              playerThreeTotal = parseInt($("#totalThree").html());
+            }
+            if($("#totalFour").html() !== "") {
+              playerFourTotal = parseInt($("#totalFour").html());
+            }
+            if($("#totalFive").html() !== "") {
+              playerFiveTotal = parseInt($("#totalFive").html());
+            }
+            console.log(dealerTotal);
           }
-        })
+        }
       }
     }
   }
-shuffleCards(arrayOfPlayingCards);
-arrayOfPlayingCards = arrayOfPlayingCards.map(divideByEightAndRoundUp);
-var shoeOfSixDecks = arrayOfPlayingCards.slice(0,312);
+}
 
 function startGame() {
   playersStart();
   dealerStarts();
-  canPlayerLeave = false;
-  playersContinue();
-
+  whoIsPlaying();
+  //who won?
 }
-// function dealersTurn() {
-//   dealerTotal = 0;
-//   whichDealerCardToShow = 0;
-//   for(var i = 0; i < 10; i++) {
-//     $("#dealerArea").children(".dealerCards").eq(i).empty();
-//   }
-//   while(dealerTotal < 17) {
-//     getValueOfDealerCard();
-//     var whichCardToAdd = shoeOfSixDecks[totalCardsPlayed] + ".png";
-//     $("#dealerArea").children(".dealerCards").eq(whichDealerCardToShow).append('<img src="playing_cards/'+whichCardToAdd+'" height="127px" width="87px"/>')
-//     totalCardsPlayed++;
-//     if(whichDealerCardToShow < 8) {
-//       whichDealerCardToShow++;
-//     }
-//     if(dealerTotal > 21) {
-//       if( haveAce === false) {
-//         $("#dealerTotal").html("Dealer Total: BUST!");
-//       }
-//       else {
-//         dealerTotal -= 10;
-//         haveAce = false;
-//         $("#dealerTotal").html("Dealer Total: " + dealerTotal);
-//       }
-//     }
-//     else {
-//       $("#dealerTotal").html("Dealer Total: " + dealerTotal);
-//     }
-//     cardsRemainingInShoe--;
-//   }
-//   $("#shoeCounter").html(cardsRemainingInShoe);
-// }
-//$("#dealerArea").on("click", dealersTurn);
+function dealerFinishes() {
+  $("#hiddenDealerCard").css("visibility", "visible");
+  $("#dealerCard2Blank").css("visibility", "hidden");
+  $("#dealerTotal").html("Dealer Total: " + dealerTotal);
+  whichDealerCardToShow = 4;
+  while(dealerTotal < 17) {
+    getValueOfDealerCard();
+    var whichCardToAdd = shoeOfSixDecks[totalCardsPlayed] + ".png";
+    $("#dealerArea").children().eq(whichDealerCardToShow).append('<img src="playing_cards/'+whichCardToAdd+'" height="127px" width="87px"/>')
+    totalCardsPlayed++;
+    if(whichDealerCardToShow < 11) {
+      whichDealerCardToShow++;
+    }
+    if(dealerTotal > 21) {
+      if( howManyAces === 0) {
+        $("#dealerTotal").html("Dealer Total: BUST!");
+      }
+      else {
+        dealerTotal -= 10;
+        howManyAces--;
+        $("#dealerTotal").html("Dealer Total: " + dealerTotal);
+      }
+    }
+    else {
+      $("#dealerTotal").html("Dealer Total: " + dealerTotal);
+    }
+    cardsRemainingInShoe--;
+
+  }
+  $("#shoeCounter").html(cardsRemainingInShoe);
+  if(dealerTotal > 21) {
+    $("#dealerTotal").html("Dealer Total: BUST!");
+  }
+}
+
 function getValueOfDealerCard() {
   if(shoeOfSixDecks[totalCardsPlayed] > 36) {
     dealerTotal += 10;
@@ -270,7 +346,7 @@ function getValueOfDealerCard() {
     }
     else {
       dealerTotal += 11;
-      haveAce = true;
+      howManyAces++;
     }
   }
   else{
@@ -288,7 +364,7 @@ function addValueOfPlayerCard() {
     }
     else {
       playerTotal += 11;
-      haveAce = true;
+      howManyAces++;
     }
   }
   else{
