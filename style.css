@@ -127,8 +127,6 @@ h2 {
 #dealerCard1 {
   top: 0px;
   left: calc(3px + 4%);
-  left: -webkit-calc(3px + 4%);
-  left: -moz-calc(3px + 4%);
 }
 #dealerCard2 {
   top: 0px;

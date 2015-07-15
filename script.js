@@ -231,7 +231,7 @@ function dealerStarts() { //good
 
   }
 }
-function playersStart() { //good
+function playersStart() {
   whichUserCard = 2;
   for(var i = 4; i >= 0; i--){
     playerTotal = 0;
@@ -279,7 +279,7 @@ function playersStart() { //good
         addValueOfPlayerCard();
         $(".playerArea").children().eq(i).children().eq(0).append('<img src="playing_cards/'+whichCardToAdd+'" height="127px" width="87px"/>')
         totalCardsPlayed++;
-        var whichCardToAdd = shoeOfSixDecks[totalCardsPlayed] + ".png";
+        whichCardToAdd = shoeOfSixDecks[totalCardsPlayed] + ".png";
         if(shoeOfSixDecks[totalCardsPlayed] < 5) {
           if(i === 4) {
             playerFiveAces++;
@@ -288,7 +288,7 @@ function playersStart() { //good
             playerFourAces++;
           }
           if(i === 2) {
-            playerThreeAce++;
+            playerThreeAces++;
           }
           if(i === 1) {
             playerTwoAces++;
@@ -375,7 +375,7 @@ function hitMe() {
       }
       else{
         playerTotal -= 10;
-        playerFiveAces--;
+        playerFourAces--;
         $(".totals").children().eq(whichPlayer).html(playerTotal);
         whichUserCard++;
 
@@ -393,7 +393,7 @@ function hitMe() {
       }
       else{
         playerTotal -= 10;
-        playerFiveAces--;
+        playerThreeAces--;
         $(".totals").children().eq(whichPlayer).html(playerTotal);
         whichUserCard++;
       }
@@ -410,7 +410,7 @@ function hitMe() {
       }
       else{
         playerTotal -= 10;
-        playerFiveAces--;
+        playerTwoAces--;
         $(".totals").children().eq(whichPlayer).html(playerTotal);
         whichUserCard++;
       }
@@ -427,7 +427,7 @@ function hitMe() {
       }
       else{
         playerTotal -= 10;
-        playerFiveAces--;
+        playerOneAces--;
         $(".totals").children().eq(whichPlayer).html(playerTotal);
         whichUserCard++;
       }
@@ -484,6 +484,7 @@ function whoIsPlaying() {
   if(playerFivePlaying === true) {
     if($("#totalFive").html() === "Blackjack!") {
       playerFivePlaying = false;
+      areAllFiveDone();
     }
     else {
       var whichUserCard = 2;
@@ -498,6 +499,7 @@ function whoIsPlaying() {
     if(playerFourPlaying === true) {
       if($("#totalFour").html() === "Blackjack!") {
         playerFourPlaying = false;
+        areAllFiveDone();
       }
       else {
         var whichUserCard = 2;
@@ -512,6 +514,7 @@ function whoIsPlaying() {
       if(playerThreePlaying === true) {
         if($("#totalThree").html() === "Blackjack!") {
           playerThreePlaying = false;
+          areAllFiveDone();
         }
         else {
           var whichUserCard = 2;
@@ -526,6 +529,7 @@ function whoIsPlaying() {
         if(playerTwoPlaying === true) {
           if($("#totalTwo").html() === "Blackjack!") {
             playerTwoPlaying = false;
+            areAllFiveDone();
           }
           else {
             var whichUserCard = 2;
@@ -540,6 +544,7 @@ function whoIsPlaying() {
           if(playerOnePlaying === true) {
             if($("#totalOne").html() === "Blackjack!") {
               playerOnePlaying = false;
+              areAllFiveDone();
             }
             else {
               var whichUserCard = 2;
