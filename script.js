@@ -324,6 +324,24 @@ function hitMe() {
   whichPlayer = $(this).index();
   playerTotal = parseInt($(".totals").children().eq(whichPlayer).html());
   addValueOfPlayerCard();
+  var tempWhichPlayerAce = $(this).index();
+  // if(shoeOfSixDecks[totalCardsPlayed] < 5) {
+  //   if(tempWhichPlayerAce === 0) {
+  //     playerOneAces++;
+  //   }
+  //   if(tempWhichPlayerAce === 1) {
+  //     playerTwoAces++;
+  //   }
+  //   if(tempWhichPlayerAce === 2) {
+  //     playerThreeAces++;
+  //   }
+  //   if(tempWhichPlayerAce === 3) {
+  //     playerFourAces++;
+  //   }
+  //   if(tempWhichPlayerAce === 4) {
+  //     playerFiveAces++;
+  //   }
+  // }
   totalCardsPlayed++;
   cardsRemainingInShoe--;
   $("#shoeCounter").html(cardsRemainingInShoe);
