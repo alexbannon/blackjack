@@ -26,6 +26,11 @@ var playerTwoTotal = 0;
 var playerThreeTotal = 0;
 var playerFourTotal = 0;
 var playerFiveTotal = 0;
+var playerOneBet = 50;
+var playerTwoBet = 50;
+var playerThreeBet = 50;
+var playerFourBet = 50;
+var playerFiveBet = 50;
 var dealerTotal = 0;
 var whichDealerCardToShow = 0;
 var whichUserCard = 2;
@@ -64,7 +69,7 @@ var canPlayerLeave = true;
 //     }
 //   }
 // }
-
+$("#startRound").on("click", startGame);
 $(".chips").on("click", function(){
   if(event.target.className == "circle") {
     if(canPlayerLeave === false) {
@@ -120,6 +125,22 @@ $(".betAmount").on("click", function(){
           if(changeBetAmount === null) {
           }
           else {
+            if(whichPlayer = 1){
+              playerOneBet = changeBetAmount;
+            }
+            if(whichPlayer = 2){
+              playerTwoBet = changeBetAmount;
+            }
+            if(whichPlayer = 3){
+              playerThreeBet = changeBetAmount;
+            }
+            if(whichPlayer = 4){
+              playerFourBet = changeBetAmount;
+            }
+            if(whichPlayer = 5){
+              playerFiveBet = changeBetAmount;
+            }
+
             $(event.target).html('Bet: $'+changeBetAmount+'<input class = "isPlayer" id="'+storeId+'" type="checkbox" name="isPlaying" value="isPlaying"><div id="stand'+whichPlayer+'">Stand</div><div id="double'+whichPlayer+'">Double</div>');
           }
 
@@ -150,6 +171,7 @@ function dealerStarts() { //good
   $("#shoeCounter").html(cardsRemainingInShoe);
 }
 function playersStart() { //good
+  whichUserCard = 2;
   for(var i = 4; i >= 0; i--){
     playerTotal = 0;
     var isPlayerSitting = $(".chips").children().eq(i).text();
@@ -208,7 +230,12 @@ function hitMe() {
   whichPlayer = $(this).index();
   playerTotal = parseInt($(".totals").children().eq(whichPlayer).html());
   addValueOfPlayerCard();
-  $(".totals").children().eq(whichPlayer).html(playerTotal);
+  if(playerTotal > 21) {
+    $(".totals").children().eq(whichPlayer).html("BUST");
+  }
+  else{
+    $(".totals").children().eq(whichPlayer).html(playerTotal);
+  }
   totalCardsPlayed++;
   whichUserCard++;
   cardsRemainingInShoe--;
@@ -274,6 +301,38 @@ function whoIsPlaying() {
             dealerFinishes();
             if($("#totalOne").html() !== ""){
               playerOneTotal = parseInt($("#totalOne").html());
+              console.log(playerOneTotal);
+              if($("totalOne").html() === "Blackjack!") {
+                console.log("you probably won");
+                //if dealer = blackjack, push
+                //if not, win 3:2 betAmount
+              }
+              else if($("totalOne").html() === "BUST"){
+                console.log("lose bet")
+                //lose bet
+              }
+              else if(playerOneTotal > dealerTotal) {
+                var playerOneChips = $("#chipOne").text();
+                playerOneChips = parseInt(playerOneChips.substr(1));
+                playerOneChips += playerOneBet;
+                $("#chipOne").text("$"+playerOneChips);
+              }
+              else if(dealerTotal > 21 && $("totalOne").html() !== "BUST"){
+                var playerOneChips = $("#chipOne").text();
+                playerOneChips = parseInt(playerOneChips.substr(1));
+                playerOneChips += playerOneBet;
+                $("#chipOne").text("$"+playerOneChips);
+              }
+              else if(dealerTotal === playerOneTotal){
+                console.log("push");
+                //push
+              }
+              else {
+                var playerOneChips = $("#chipOne").text();
+                playerOneChips = parseInt(playerOneChips.substr(1));
+                playerOneChips -= playerOneBet;
+                $("#chipOne").text("$"+playerOneChips);
+              }
             }
             if($("#totalTwo").html() !== ""){
               playerTwoTotal = parseInt($("#totalTwo").html());

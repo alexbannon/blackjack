@@ -44,6 +44,20 @@ h1 {
   color: rgb(180, 180, 180);
   min-width: 1017px;
 }
+#startRound {
+  width: 100px;
+  border: 3px solid black;
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  border-radius: 25px;
+  display: inline-block;
+  background-color: rgb(73, 118, 64);
+  font-family: 'lobster', 'sans-serif';
+  position: absolute;
+  left: 17%;
+  top: 130px;
+  font-size: 2em;
+}
 #dealerChipsAndShoe {
   position: relative;
   margin: 10px 0 0 0;
