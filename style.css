@@ -55,7 +55,7 @@ h1 {
   font-family: 'lobster', 'sans-serif';
   position: absolute;
   left: 17%;
-  top: 130px;
+  top: 262px;
   font-size: 2em;
 }
 #dealerChipsAndShoe {
@@ -105,7 +105,7 @@ h2 {
   border: 3px solid black;
   width: 100%;
   max-width: 1300px;
-  margin: 0 auto 5px auto;
+  margin: 0 auto 3px auto;
   background-color: rgb(73, 118, 64);
   font-family: 'lobster', 'sans-serif';
   text-align: center;
@@ -174,7 +174,7 @@ h2 {
 .isPlayer {
   display: none;
 }
-.playerArea, .chips, .totals, .betAmount, .splitContainer, .PlayerNumber {
+.playerArea, .chips, .totals, .betAmount, .turnContainer, .PlayerNumber {
   display: flex;
   margin: 0 auto;
   text-align: center;
@@ -250,7 +250,7 @@ h2 {
   left: -20px;
 }
 
-.circle, .split {
+.circle, .whoseTurn {
     width: 60px;
     border: 3px solid black;
     -webkit-border-radius: 25px;
@@ -262,6 +262,10 @@ h2 {
 }
 .circle {
   margin: 30px auto 0px auto;
+}
+.whoseTurn {
+  margin: 0 auto;
+  height: 30px;
 }
 .split {
   margin: 0 auto 3px auto;

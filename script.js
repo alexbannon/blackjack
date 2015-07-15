@@ -36,6 +36,12 @@ var whichDealerCardToShow = 0;
 var whichUserCard = 2;
 var cardsRemainingInShoe = 312;
 var howManyAces = 0;
+var howManyPlayerAces = 0;
+var playerOneAces = 0;
+var playerTwoAces = 0;
+var playerThreeAces = 0;
+var playerFourAces = 0;
+var playerFiveAces = 0;
 var playerOnePlaying = false;
 var playerTwoPlaying = false;
 var playerThreePlaying = false;
@@ -69,6 +75,7 @@ var canPlayerLeave = true;
 //     }
 //   }
 // }
+$(".betAmount").on("click", changeBet);
 $("#startRound").on("click", startGame);
 $(".chips").on("click", function(){
   if(event.target.className == "circle") {
@@ -105,7 +112,7 @@ $(".chips").on("click", function(){
     }
   }
 })
-$(".betAmount").on("click", function(){
+function changeBet() {
   if(event.target.className == "betNoMargin") {
     if(canPlayerLeave === false) {
     }
@@ -125,29 +132,72 @@ $(".betAmount").on("click", function(){
           if(changeBetAmount === null) {
           }
           else {
-            if(whichPlayer = 1){
+            if(whichPlayer === 1){
               playerOneBet = changeBetAmount;
             }
-            if(whichPlayer = 2){
+            if(whichPlayer === 2){
               playerTwoBet = changeBetAmount;
             }
-            if(whichPlayer = 3){
+            if(whichPlayer === 3){
               playerThreeBet = changeBetAmount;
             }
-            if(whichPlayer = 4){
+            if(whichPlayer === 4){
               playerFourBet = changeBetAmount;
             }
-            if(whichPlayer = 5){
+            if(whichPlayer === 5){
               playerFiveBet = changeBetAmount;
             }
-
             $(event.target).html('Bet: $'+changeBetAmount+'<input class = "isPlayer" id="'+storeId+'" type="checkbox" name="isPlaying" value="isPlaying"><div id="stand'+whichPlayer+'">Stand</div><div id="double'+whichPlayer+'">Double</div>');
+
           }
 
         }
     }
   }
-})
+}
+// $(".betAmount").on("click", function(){
+//   if(event.target.className == "betNoMargin") {
+//     if(canPlayerLeave === false) {
+//     }
+//     else {
+//         var whatsInBetString = $(event.target).text();
+//         if(whatsInBetString.indexOf("Vacant") > -1) {
+//           alert("Click sit to join game!");
+//         }
+//         else {
+//           var whichPlayer = $(event.target).children().eq(0).attr("id").length;
+//           var storeId = $(event.target).children().eq(0).attr("id");
+//           console.log(whichPlayer);
+//           var changeBetAmount = prompt("How much would you like to bet per round? Only multiples of 10 please!", "50");
+//           while(changeBetAmount % 10 !== 0 || changeBetAmount > 1000) {
+//             var changeBetAmount = prompt("Sorry. Only bet amounts that are multiples of 10 are allowed and maximum bet is $1000", "50");
+//           }
+//           if(changeBetAmount === null) {
+//           }
+//           else {
+//             if(whichPlayer = 1){
+//               playerOneBet = changeBetAmount;
+//             }
+//             if(whichPlayer = 2){
+//               playerTwoBet = changeBetAmount;
+//             }
+//             if(whichPlayer = 3){
+//               playerThreeBet = changeBetAmount;
+//             }
+//             if(whichPlayer = 4){
+//               playerFourBet = changeBetAmount;
+//             }
+//             if(whichPlayer = 5){
+//               playerFiveBet = changeBetAmount;
+//             }
+//
+//             $(event.target).html('Bet: $'+changeBetAmount+'<input class = "isPlayer" id="'+storeId+'" type="checkbox" name="isPlaying" value="isPlaying"><div id="stand'+whichPlayer+'">Stand</div><div id="double'+whichPlayer+'">Double</div>');
+//           }
+//
+//         }
+//     }
+//   }
+// })
 
 function dealerStarts() { //good
   dealerTotal = 0;
@@ -169,6 +219,17 @@ function dealerStarts() { //good
   totalCardsPlayed++;
   cardsRemainingInShoe--;
   $("#shoeCounter").html(cardsRemainingInShoe);
+  if(dealerTotal === 21){
+    $("#dealerTotal").html("BLACKJACK!");
+    $("#dealerCard2Blank").css("visibility", "hidden");
+    $("#hiddenDealerCard").css("visibility", "visible");
+    playerOnePlaying = false;
+    playerTwoPlaying = false;
+    playerThreePlaying = false;
+    playerFourPlaying = false;
+    playerFivePlaying = false;
+
+  }
 }
 function playersStart() { //good
   whichUserCard = 2;
@@ -198,11 +259,44 @@ function playersStart() { //good
         }
         $(".playerArea").children().eq(i).children().empty();
         var whichCardToAdd = shoeOfSixDecks[totalCardsPlayed] + ".png";
+        if(shoeOfSixDecks[totalCardsPlayed] < 5) {
+          if(i === 4) {
+            playerFiveAces++;
+          }
+          if(i === 3) {
+            playerFourAces++;
+          }
+          if(i === 2) {
+            playerThreeAce++;
+          }
+          if(i === 1) {
+            playerTwoAces++;
+          }
+          if(i === 0) {
+            playerOneAces++;
+          }
+        }
         addValueOfPlayerCard();
         $(".playerArea").children().eq(i).children().eq(0).append('<img src="playing_cards/'+whichCardToAdd+'" height="127px" width="87px"/>')
-        var whichCardToAdd = shoeOfSixDecks[totalCardsPlayed] + ".png";
         totalCardsPlayed++;
         var whichCardToAdd = shoeOfSixDecks[totalCardsPlayed] + ".png";
+        if(shoeOfSixDecks[totalCardsPlayed] < 5) {
+          if(i === 4) {
+            playerFiveAces++;
+          }
+          if(i === 3) {
+            playerFourAces++;
+          }
+          if(i === 2) {
+            playerThreeAce++;
+          }
+          if(i === 1) {
+            playerTwoAces++;
+          }
+          if(i === 0) {
+            playerOneAces++;
+          }
+        }
         addValueOfPlayerCard();
         $(".playerArea").children().eq(i).children().eq(1).append('<img src="playing_cards/'+whichCardToAdd+'" height="127px" width="87px"/>')
         totalCardsPlayed++;
@@ -231,7 +325,86 @@ function hitMe() {
   playerTotal = parseInt($(".totals").children().eq(whichPlayer).html());
   addValueOfPlayerCard();
   if(playerTotal > 21) {
-    $(".totals").children().eq(whichPlayer).html("BUST");
+    if(whichPlayer === 4) {
+      if(playerFiveAces === 0) {
+        $(".totals").children().eq(whichPlayer).html("BUST");
+        $(".playerArea").children().eq(4).off("click", hitMe);
+        $("#stand5").off("click", stand);
+        playerFivePlaying = false;
+        $("#turnFive").empty();
+        whichUserCard = 2;
+      }
+      else{
+        playerTotal -= 10;
+        playerFiveAces--;
+        $(".totals").children().eq(whichPlayer).html(playerTotal);
+      }
+      whoIsPlaying();
+    }
+    if(whichPlayer === 3) {
+      if(playerFourAces === 0) {
+        $(".totals").children().eq(whichPlayer).html("BUST");
+        $(".playerArea").children().eq(3).off("click", hitMe);
+        $("#stand4").off("click", stand);
+        playerFourPlaying = false;
+        $("#turnFour").empty();
+        whichUserCard = 2;
+      }
+      else{
+        playerTotal -= 10;
+        playerFiveAces--;
+        $(".totals").children().eq(whichPlayer).html(playerTotal);
+      }
+      whoIsPlaying();
+    }
+    if(whichPlayer === 2) {
+      if(playerThreeAces === 0) {
+        $(".totals").children().eq(whichPlayer).html("BUST");
+        $(".playerArea").children().eq(2).off("click", hitMe);
+        $("#stand3").off("click", stand);
+        playerThreePlaying = false;
+        $("#turnThree").empty();
+        whichUserCard = 2;
+      }
+      else{
+        playerTotal -= 10;
+        playerFiveAces--;
+        $(".totals").children().eq(whichPlayer).html(playerTotal);
+      }
+      whoIsPlaying();
+    }
+    if(whichPlayer === 1) {
+      if(playerFiveAces === 0) {
+        $(".totals").children().eq(whichPlayer).html("BUST");
+        $(".playerArea").children().eq(1).off("click", hitMe);
+        $("#stand2").off("click", stand);
+        playerTwoPlaying = false;
+        $("#turnTwo").empty();
+        whichUserCard = 2;
+      }
+      else{
+        playerTotal -= 10;
+        playerFiveAces--;
+        $(".totals").children().eq(whichPlayer).html(playerTotal);
+      }
+      whoIsPlaying();
+    }
+    if(whichPlayer === 0) {
+      if(playerFiveAces === 0) {
+        $(".totals").children().eq(whichPlayer).html("BUST");
+        $(".playerArea").children().eq(0).off("click", hitMe);
+        $("#stand1").off("click", stand);
+        playerOnePlaying = false;
+        $("#turnOne").empty();
+        whichUserCard = 2;
+      }
+      else{
+        playerTotal -= 10;
+        playerFiveAces--;
+        $(".totals").children().eq(whichPlayer).html(playerTotal);
+      }
+      whoIsPlaying();
+    }
   }
   else{
     $(".totals").children().eq(whichPlayer).html(playerTotal);
@@ -242,32 +415,38 @@ function hitMe() {
   $("#shoeCounter").html(cardsRemainingInShoe);
 }
 function stand() {
+  console.log("stand!");
   whichUserCard = 2;
   var thisPlayer = $(this).parent().children().eq(0).attr("id").length;
   if(thisPlayer === 5) {
     $(".playerArea").children().eq(4).off("click", hitMe);
     $("#stand5").off("click", stand);
     playerFivePlaying = false;
+    $("#turnFive").empty();
   }
   if(thisPlayer === 4) {
     $(".playerArea").children().eq(3).off("click", hitMe);
     $("#stand4").off("click", stand);
     playerFourPlaying = false;
+    $("#turnFour").empty();
   }
   if(thisPlayer === 3) {
     $(".playerArea").children().eq(2).off("click", hitMe);
     $("#stand3").off("click", stand);
     playerThreePlaying = false;
+    $("#turnThree").empty();
   }
   if(thisPlayer === 2) {
     $(".playerArea").children().eq(1).off("click", hitMe);
     $("#stand2").off("click", stand);
     playerTwoPlaying = false;
+    $("#turnTwo").empty();
   }
   if(thisPlayer === 1) {
     $(".playerArea").children().eq(0).off("click", hitMe);
     $("#stand1").off("click", stand);
     playerOnePlaying = false;
+    $("#turnOne").empty();
   }
   whoIsPlaying();
 }
@@ -279,28 +458,73 @@ function stand() {
 
 function whoIsPlaying() {
   if(playerFivePlaying === true) {
-    $(".playerArea").children().eq(4).on("click", hitMe);
-    $("#stand5").on("click", stand);
+    if($("#totalFive").html() === "Blackjack!") {
+      playerFivePlaying = false;
+    }
+    else {
+      var whichUserCard = 2;
+      $(".playerArea").children().eq(4).off("click", hitMe);
+      $("#stand5").off("click", stand);
+      $("#turnFive").html("&#x25BC");
+      $(".playerArea").children().eq(4).on("click", hitMe);
+      $("#stand5").on("click", stand);
+    }
   }
   else {
     if(playerFourPlaying === true) {
-      $(".playerArea").children().eq(3).on("click", hitMe);
-      $("#stand4").on("click", stand);
+      if($("#totalFour").html() === "Blackjack!") {
+        playerFourPlaying = false;
+      }
+      else {
+        var whichUserCard = 2;
+        $(".playerArea").children().eq(3).off("click", hitMe);
+        $("#stand4").off("click", stand);
+        $("#turnFour").html("&#x25BC");
+        $(".playerArea").children().eq(3).on("click", hitMe);
+        $("#stand4").on("click", stand);
+      }
     }
     else {
       if(playerThreePlaying === true) {
-        $(".playerArea").children().eq(2).on("click", hitMe);
-        $("#stand3").on("click", stand);
+        if($("#totalThree").html() === "Blackjack!") {
+          playerThreePlaying = false;
+        }
+        else {
+          var whichUserCard = 2;
+          $(".playerArea").children().eq(2).off("click", hitMe);
+          $("#stand3").off("click", stand);
+          $("#turnThree").html("&#x25BC");
+          $(".playerArea").children().eq(2).on("click", hitMe);
+          $("#stand3").on("click", stand);
+        }
       }
       else {
         if(playerTwoPlaying === true) {
-          $(".playerArea").children().eq(1).on("click", hitMe);
-          $("#stand2").on("click", stand);
+          if($("#totalTwo").html() === "Blackjack!") {
+            playerTwoPlaying = false;
+          }
+          else {
+            var whichUserCard = 2;
+            $(".playerArea").children().eq(1).off("click", hitMe);
+            $("#stand2").off("click", stand);
+            $("#turnTwo").html("&#x25BC");
+            $(".playerArea").children().eq(1).on("click", hitMe);
+            $("#stand2").on("click", stand);
+          }
         }
         else {
           if(playerOnePlaying === true) {
-            $(".playerArea").children().eq(0).on("click", hitMe);
-            $("#stand1").on("click", stand);
+            if($("#totalOne").html() === "Blackjack!") {
+              playerOnePlaying = false;
+            }
+            else {
+              var whichUserCard = 2;
+              $(".playerArea").children().eq(0).off("click", hitMe);
+              $("#stand1").off("click", stand);
+              $("#turnOne").html("&#x25BC");
+              $(".playerArea").children().eq(0).on("click", hitMe);
+              $("#stand1").on("click", stand);
+            }
           }
           else {
             dealerFinishes();
@@ -309,20 +533,55 @@ function whoIsPlaying() {
             didPlayerWin("#totalThree", "#chipThree", playerThreeBet);
             didPlayerWin("#totalFour", "#chipFour", playerFourBet);
             didPlayerWin("#totalFive", "#chipFive", playerFiveBet);
+            canPlayerLeave = true;
+            whichPlayerHasBlackjack = 0;
+            $("#startRound").on("click", startGame);
+            playerOneAces = 0;
+            playerTwoAces = 0;
+            playerThreeAces = 0;
+            playerFourAces = 0;
+            playerFiveAces = 0;
           }
         }
       }
     }
   }
 }
-
+function areAllFiveDone() {
+  if(playerOnePlaying === true || playerTwoPlaying === true || playerThreePlaying === true || playerFourPlaying === true || playerFivePlaying === true){
+    whoIsPlaying();
+  }
+  if($("#totalOne").html() === ""){
+    if($("#totalTwo").html() === ""){
+      if($("#totalThree").html() === ""){
+        if($("#totalFour").html() === ""){
+          if($("#totalFive").html() === ""){}
+          else if($("#totalFive").html() === "Blackjack!"){whoIsPlaying();}
+        }
+        else if($("#totalFour").html() === "Blackjack!"){whoIsPlaying();}
+      }
+      else if($("#totalThree").html() === "Blackjack!"){whoIsPlaying();}
+    }
+    else if($("#totalTwo").html() === "Blackjack!"){whoIsPlaying();}
+  }
+  else if($("#totalOne").html() === "Blackjack!"){whoIsPlaying();}
+}
 function startGame() {
-  playersStart();
-  dealerStarts();
-  whoIsPlaying();
-  return;
+$("#startRound").off("click", startGame);
+for(var i = 0; i < 5; i++) {
+  $(".turnContainer").children().eq(i).empty();
+}
+canPlayerLeave = false;
+canStartBePressed = false;
+playersStart();
+dealerStarts();
+whoIsPlaying();
+areAllFiveDone();
+return;
 }
 function dealerFinishes() {
+if(dealerTotal === 21){}
+else{
   $("#hiddenDealerCard").css("visibility", "visible");
   $("#dealerCard2Blank").css("visibility", "hidden");
   $("#dealerTotal").html("Dealer Total: " + dealerTotal);
@@ -356,7 +615,7 @@ function dealerFinishes() {
     $("#dealerTotal").html("Dealer Total: BUST!");
   }
 }
-
+}
 function getValueOfDealerCard() {
   if(shoeOfSixDecks[totalCardsPlayed] > 36) {
     dealerTotal += 10;
@@ -385,7 +644,7 @@ function addValueOfPlayerCard() {
     }
     else {
       playerTotal += 11;
-      howManyAces++;
+      howManyPlayerAces++;
     }
   }
   else{
@@ -395,73 +654,97 @@ function addValueOfPlayerCard() {
 }
 function didPlayerWin(totalId, chipId, thisPlayerBet) { //#totalOne, #chipOne, playerOneBet
   if($(totalId).html() !== ""){
-    tempPlayerOneTotal = parseInt($(totalId).html());
-    if($(totalId).html() === "Blackjack!") {
-      console.log("you probably won");
-      //if dealer = blackjack, push
-      //if not, win 3:2 betAmount
-    }
-    else if($(totalId).html() === "BUST"){
-      console.log("lose bet")
-      //lose bet
-    }
-    else if(tempPlayerOneTotal > dealerTotal) {
-      var playerOneChips = $(chipId).text();
-      playerOneChips = parseInt(playerOneChips.substr(1));
-      playerOneChips += thisPlayerBet;
-      $(chipId).text("$"+playerOneChips);
-    }
-    else if(dealerTotal > 21 && $(totalId).html() !== "BUST"){
-      var playerOneChips = $(chipId).text();
-      playerOneChips = parseInt(playerOneChips.substr(1));
-      playerOneChips += thisPlayerBet;
-      $(chipId).text("$"+playerOneChips);
-    }
-    else if(dealerTotal === tempPlayerOneTotal){
-      console.log("push");
-      //push
+    tempPlayerTotal = parseInt($(totalId).html());
+    tempWhichPlayer = $(chipId).index();
+    if($("#dealerTotal").html() === "BLACKJACK!"){
+      if($(totalId).html() === "Blackjack!") {
+        console.log("push");
+        $(".turnContainer").children().eq(tempWhichPlayer).html("Push");
+        //write push above name
+      }
+      else {
+        var playerChips = $(chipId).text();
+        playerChips = parseInt(playerChips.substr(1));
+        playerChips -= thisPlayerBet;
+        $(chipId).text("$"+playerChips);
+        $(".turnContainer").children().eq(tempWhichPlayer).html("Lose");
+      }
     }
     else {
-      var playerChips = $(chipId).text();
-      playerChips = parseInt(playerChips.substr(1));
-      playerChips -= thisPlayerBet;
-      $(chipId).text("$"+playerChips);
+      if($(totalId).html() === "Blackjack!") {
+        var playerOneChips = $(chipId).text();
+        playerOneChips = parseInt(playerOneChips.substr(1));
+        playerOneChips += ((thisPlayerBet * 3) / 2);
+        $(chipId).text("$"+playerOneChips);
+        $(".turnContainer").children().eq(tempWhichPlayer).html("Win");
+      }
+      else if($(totalId).html() === "BUST"){
+        var playerChips = $(chipId).text();
+        playerChips = parseInt(playerChips.substr(1));
+        playerChips -= thisPlayerBet;
+        $(chipId).text("$"+playerChips);
+        $(".turnContainer").children().eq(tempWhichPlayer).html("Lose");
+      }
+      else if(tempPlayerTotal > dealerTotal) {
+        var playerOneChips = $(chipId).text();
+        playerOneChips = parseInt(playerOneChips.substr(1));
+        playerOneChips += thisPlayerBet;
+        $(chipId).text("$"+playerOneChips);
+        $(".turnContainer").children().eq(tempWhichPlayer).html("Win");
+      }
+      else if(dealerTotal > 21 && $(totalId).html() !== "BUST"){
+        var playerOneChips = $(chipId).text();
+        playerOneChips = parseInt(playerOneChips.substr(1));
+        playerOneChips += thisPlayerBet;
+        $(chipId).text("$"+playerOneChips);
+        $(".turnContainer").children().eq(tempWhichPlayer).html("Win");
+      }
+      else if(dealerTotal === tempPlayerTotal){
+        $(".turnContainer").children().eq(tempWhichPlayer).html("Push");
+      }
+      else {
+        var playerChips = $(chipId).text();
+        playerChips = parseInt(playerChips.substr(1));
+        playerChips -= thisPlayerBet;
+        $(chipId).text("$"+playerChips);
+        $(".turnContainer").children().eq(tempWhichPlayer).html("Lose");
+      }
     }
   }
 }
-function didPlayerOneWin() {
-  if($("#totalOne").html() !== ""){
-    playerOneTotal = parseInt($("#totalOne").html());
-    if($("#totalOne").html() === "Blackjack!") {
-      console.log("you probably won");
-      //if dealer = blackjack, push
-      //if not, win 3:2 betAmount
-    }
-    else if($("#totalOne").html() === "BUST"){
-      console.log("lose bet")
-      //lose bet
-    }
-    else if(playerOneTotal > dealerTotal) {
-      var playerOneChips = $("#chipOne").text();
-      playerOneChips = parseInt(playerOneChips.substr(1));
-      playerOneChips += playerOneBet;
-      $("#chipOne").text("$"+playerOneChips);
-    }
-    else if(dealerTotal > 21 && $("totalOne").html() !== "BUST"){
-      var playerOneChips = $("#chipOne").text();
-      playerOneChips = parseInt(playerOneChips.substr(1));
-      playerOneChips += playerOneBet;
-      $("#chipOne").text("$"+playerOneChips);
-    }
-    else if(dealerTotal === playerOneTotal){
-      console.log("push");
-      //push
-    }
-    else {
-      var playerOneChips = $("#chipOne").text();
-      playerOneChips = parseInt(playerOneChips.substr(1));
-      playerOneChips -= playerOneBet;
-      $("#chipOne").text("$"+playerOneChips);
-    }
-  }
-}
+// function didPlayerOneWin() {
+//   if($("#totalOne").html() !== ""){
+//     playerOneTotal = parseInt($("#totalOne").html());
+//     if($("#totalOne").html() === "Blackjack!") {
+//       console.log("you probably won");
+//       //if dealer = blackjack, push
+//       //if not, win 3:2 betAmount
+//     }
+//     else if($("#totalOne").html() === "BUST"){
+//       console.log("lose bet")
+//       //lose bet
+//     }
+//     else if(playerOneTotal > dealerTotal) {
+//       var playerOneChips = $("#chipOne").text();
+//       playerOneChips = parseInt(playerOneChips.substr(1));
+//       playerOneChips += playerOneBet;
+//       $("#chipOne").text("$"+playerOneChips);
+//     }
+//     else if(dealerTotal > 21 && $("totalOne").html() !== "BUST"){
+//       var playerOneChips = $("#chipOne").text();
+//       playerOneChips = parseInt(playerOneChips.substr(1));
+//       playerOneChips += playerOneBet;
+//       $("#chipOne").text("$"+playerOneChips);
+//     }
+//     else if(dealerTotal === playerOneTotal){
+//       console.log("push");
+//       //push
+//     }
+//     else {
+//       var playerOneChips = $("#chipOne").text();
+//       playerOneChips = parseInt(playerOneChips.substr(1));
+//       playerOneChips -= playerOneBet;
+//       $("#chipOne").text("$"+playerOneChips);
+//     }
+//   }
+// }
