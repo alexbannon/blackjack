@@ -245,24 +245,29 @@ function stand() {
   whichUserCard = 2;
   var thisPlayer = $(this).parent().children().eq(0).attr("id").length;
   if(thisPlayer === 5) {
-    playerFivePlaying = false;
     $(".playerArea").children().eq(4).off("click", hitMe);
+    $("#stand5").off("click", stand);
+    playerFivePlaying = false;
   }
   if(thisPlayer === 4) {
-    playerFourPlaying = false;
     $(".playerArea").children().eq(3).off("click", hitMe);
+    $("#stand4").off("click", stand);
+    playerFourPlaying = false;
   }
   if(thisPlayer === 3) {
-    playerThreePlaying = false;
     $(".playerArea").children().eq(2).off("click", hitMe);
+    $("#stand3").off("click", stand);
+    playerThreePlaying = false;
   }
   if(thisPlayer === 2) {
-    playerTwoPlaying = false;
     $(".playerArea").children().eq(1).off("click", hitMe);
+    $("#stand2").off("click", stand);
+    playerTwoPlaying = false;
   }
   if(thisPlayer === 1) {
-    playerOnePlaying = false;
     $(".playerArea").children().eq(0).off("click", hitMe);
+    $("#stand1").off("click", stand);
+    playerOnePlaying = false;
   }
   whoIsPlaying();
 }
@@ -299,54 +304,11 @@ function whoIsPlaying() {
           }
           else {
             dealerFinishes();
-            if($("#totalOne").html() !== ""){
-              playerOneTotal = parseInt($("#totalOne").html());
-              console.log(playerOneTotal);
-              if($("totalOne").html() === "Blackjack!") {
-                console.log("you probably won");
-                //if dealer = blackjack, push
-                //if not, win 3:2 betAmount
-              }
-              else if($("totalOne").html() === "BUST"){
-                console.log("lose bet")
-                //lose bet
-              }
-              else if(playerOneTotal > dealerTotal) {
-                var playerOneChips = $("#chipOne").text();
-                playerOneChips = parseInt(playerOneChips.substr(1));
-                playerOneChips += playerOneBet;
-                $("#chipOne").text("$"+playerOneChips);
-              }
-              else if(dealerTotal > 21 && $("totalOne").html() !== "BUST"){
-                var playerOneChips = $("#chipOne").text();
-                playerOneChips = parseInt(playerOneChips.substr(1));
-                playerOneChips += playerOneBet;
-                $("#chipOne").text("$"+playerOneChips);
-              }
-              else if(dealerTotal === playerOneTotal){
-                console.log("push");
-                //push
-              }
-              else {
-                var playerOneChips = $("#chipOne").text();
-                playerOneChips = parseInt(playerOneChips.substr(1));
-                playerOneChips -= playerOneBet;
-                $("#chipOne").text("$"+playerOneChips);
-              }
-            }
-            if($("#totalTwo").html() !== ""){
-              playerTwoTotal = parseInt($("#totalTwo").html());
-            }
-            if($("#totalThree").html() !== ""){
-              playerThreeTotal = parseInt($("#totalThree").html());
-            }
-            if($("#totalFour").html() !== "") {
-              playerFourTotal = parseInt($("#totalFour").html());
-            }
-            if($("#totalFive").html() !== "") {
-              playerFiveTotal = parseInt($("#totalFive").html());
-            }
-            console.log(dealerTotal);
+            didPlayerWin("#totalOne", "#chipOne", playerOneBet);
+            didPlayerWin("#totalTwo", "#chipTwo", playerTwoBet);
+            didPlayerWin("#totalThree", "#chipThree", playerThreeBet);
+            didPlayerWin("#totalFour", "#chipFour", playerFourBet);
+            didPlayerWin("#totalFive", "#chipFive", playerFiveBet);
           }
         }
       }
@@ -358,7 +320,7 @@ function startGame() {
   playersStart();
   dealerStarts();
   whoIsPlaying();
-  //who won?
+  return;
 }
 function dealerFinishes() {
   $("#hiddenDealerCard").css("visibility", "visible");
@@ -429,5 +391,77 @@ function addValueOfPlayerCard() {
   else{
     var playerPoints = Math.ceil(shoeOfSixDecks[totalCardsPlayed] / 4);
     playerTotal += playerPoints;
+  }
+}
+function didPlayerWin(totalId, chipId, thisPlayerBet) { //#totalOne, #chipOne, playerOneBet
+  if($(totalId).html() !== ""){
+    tempPlayerOneTotal = parseInt($(totalId).html());
+    if($(totalId).html() === "Blackjack!") {
+      console.log("you probably won");
+      //if dealer = blackjack, push
+      //if not, win 3:2 betAmount
+    }
+    else if($(totalId).html() === "BUST"){
+      console.log("lose bet")
+      //lose bet
+    }
+    else if(tempPlayerOneTotal > dealerTotal) {
+      var playerOneChips = $(chipId).text();
+      playerOneChips = parseInt(playerOneChips.substr(1));
+      playerOneChips += thisPlayerBet;
+      $(chipId).text("$"+playerOneChips);
+    }
+    else if(dealerTotal > 21 && $(totalId).html() !== "BUST"){
+      var playerOneChips = $(chipId).text();
+      playerOneChips = parseInt(playerOneChips.substr(1));
+      playerOneChips += thisPlayerBet;
+      $(chipId).text("$"+playerOneChips);
+    }
+    else if(dealerTotal === tempPlayerOneTotal){
+      console.log("push");
+      //push
+    }
+    else {
+      var playerChips = $(chipId).text();
+      playerChips = parseInt(playerChips.substr(1));
+      playerChips -= thisPlayerBet;
+      $(chipId).text("$"+playerChips);
+    }
+  }
+}
+function didPlayerOneWin() {
+  if($("#totalOne").html() !== ""){
+    playerOneTotal = parseInt($("#totalOne").html());
+    if($("#totalOne").html() === "Blackjack!") {
+      console.log("you probably won");
+      //if dealer = blackjack, push
+      //if not, win 3:2 betAmount
+    }
+    else if($("#totalOne").html() === "BUST"){
+      console.log("lose bet")
+      //lose bet
+    }
+    else if(playerOneTotal > dealerTotal) {
+      var playerOneChips = $("#chipOne").text();
+      playerOneChips = parseInt(playerOneChips.substr(1));
+      playerOneChips += playerOneBet;
+      $("#chipOne").text("$"+playerOneChips);
+    }
+    else if(dealerTotal > 21 && $("totalOne").html() !== "BUST"){
+      var playerOneChips = $("#chipOne").text();
+      playerOneChips = parseInt(playerOneChips.substr(1));
+      playerOneChips += playerOneBet;
+      $("#chipOne").text("$"+playerOneChips);
+    }
+    else if(dealerTotal === playerOneTotal){
+      console.log("push");
+      //push
+    }
+    else {
+      var playerOneChips = $("#chipOne").text();
+      playerOneChips = parseInt(playerOneChips.substr(1));
+      playerOneChips -= playerOneBet;
+      $("#chipOne").text("$"+playerOneChips);
+    }
   }
 }
