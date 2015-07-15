@@ -325,23 +325,23 @@ function hitMe() {
   playerTotal = parseInt($(".totals").children().eq(whichPlayer).html());
   addValueOfPlayerCard();
   var tempWhichPlayerAce = $(this).index();
-  // if(shoeOfSixDecks[totalCardsPlayed] < 5) {
-  //   if(tempWhichPlayerAce === 0) {
-  //     playerOneAces++;
-  //   }
-  //   if(tempWhichPlayerAce === 1) {
-  //     playerTwoAces++;
-  //   }
-  //   if(tempWhichPlayerAce === 2) {
-  //     playerThreeAces++;
-  //   }
-  //   if(tempWhichPlayerAce === 3) {
-  //     playerFourAces++;
-  //   }
-  //   if(tempWhichPlayerAce === 4) {
-  //     playerFiveAces++;
-  //   }
-  // }
+  if(shoeOfSixDecks[totalCardsPlayed] < 5) {
+    if(tempWhichPlayerAce === 0) {
+      playerOneAces++;
+    }
+    if(tempWhichPlayerAce === 1) {
+      playerTwoAces++;
+    }
+    if(tempWhichPlayerAce === 2) {
+      playerThreeAces++;
+    }
+    if(tempWhichPlayerAce === 3) {
+      playerFourAces++;
+    }
+    if(tempWhichPlayerAce === 4) {
+      playerFiveAces++;
+    }
+  }
   totalCardsPlayed++;
   cardsRemainingInShoe--;
   $("#shoeCounter").html(cardsRemainingInShoe);
@@ -399,7 +399,7 @@ function hitMe() {
       }
     }
     if(whichPlayer === 1) {
-      if(playerFiveAces === 0) {
+      if(playerTwoAces === 0) {
         $(".totals").children().eq(whichPlayer).html("BUST");
         $(".playerArea").children().eq(1).off("click", hitMe);
         $("#stand2").off("click", stand);
@@ -416,7 +416,7 @@ function hitMe() {
       }
     }
     if(whichPlayer === 0) {
-      if(playerFiveAces === 0) {
+      if(playerOneAces === 0) {
         $(".totals").children().eq(whichPlayer).html("BUST");
         $(".playerArea").children().eq(0).off("click", hitMe);
         $("#stand1").off("click", stand);
