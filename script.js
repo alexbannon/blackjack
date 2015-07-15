@@ -680,6 +680,7 @@ function didPlayerWin(totalId, chipId, thisPlayerBet) { //#totalOne, #chipOne, p
   if($(totalId).html() !== ""){
     tempPlayerTotal = parseInt($(totalId).html());
     tempWhichPlayer = $(chipId).index();
+    thisPlayerBet = parseInt(thisPlayerBet);
     if($("#dealerTotal").html() === "BLACKJACK!"){
       if($(totalId).html() === "Blackjack!") {
         console.log("push");
@@ -696,10 +697,10 @@ function didPlayerWin(totalId, chipId, thisPlayerBet) { //#totalOne, #chipOne, p
     }
     else {
       if($(totalId).html() === "Blackjack!") {
-        var playerOneChips = $(chipId).text();
-        playerOneChips = parseInt(playerOneChips.substr(1));
-        playerOneChips += ((thisPlayerBet * 3) / 2);
-        $(chipId).text("$"+playerOneChips);
+        var playerChips = $(chipId).text();
+        playerChips = parseInt(playerChips.substr(1));
+        playerChips += ((thisPlayerBet * 3) / 2);
+        $(chipId).text("$"+playerChips);
         $(".turnContainer").children().eq(tempWhichPlayer).html("Win");
       }
       else if($(totalId).html() === "BUST"){
@@ -710,17 +711,17 @@ function didPlayerWin(totalId, chipId, thisPlayerBet) { //#totalOne, #chipOne, p
         $(".turnContainer").children().eq(tempWhichPlayer).html("Lose");
       }
       else if(tempPlayerTotal > dealerTotal) {
-        var playerOneChips = $(chipId).text();
-        playerOneChips = parseInt(playerOneChips.substr(1));
-        playerOneChips += thisPlayerBet;
-        $(chipId).text("$"+playerOneChips);
+        var playerChips = $(chipId).text();
+        playerChips = parseInt(playerChips.substr(1));
+        playerChips += thisPlayerBet;
+        $(chipId).text("$"+playerChips);
         $(".turnContainer").children().eq(tempWhichPlayer).html("Win");
       }
       else if(dealerTotal > 21 && $(totalId).html() !== "BUST"){
-        var playerOneChips = $(chipId).text();
-        playerOneChips = parseInt(playerOneChips.substr(1));
-        playerOneChips += thisPlayerBet;
-        $(chipId).text("$"+playerOneChips);
+        var playerChips = $(chipId).text();
+        playerChips = parseInt(playerChips.substr(1));
+        playerChips += thisPlayerBet;
+        $(chipId).text("$"+playerChips);
         $(".turnContainer").children().eq(tempWhichPlayer).html("Win");
       }
       else if(dealerTotal === tempPlayerTotal){
