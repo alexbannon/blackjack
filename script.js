@@ -8,17 +8,27 @@ function shuffleCards(array) { //fisher Yates Shuffle
   }
   return array;
 }
-var arrayOfPlayingCards = [];
+
+// good practice is to separate functions with whitespace (new lines) for readability
+
+var arrayOfPlayingCards = []; // why not just call this playingCards? the plural tells me it's an array
 for(var i = 1; i < 417; i++) {
   arrayOfPlayingCards.push(i);
 }
+
 function divideByEightAndRoundUp(input) {
   return Math.ceil(input / 8);
 }
+
 shuffleCards(arrayOfPlayingCards);
 arrayOfPlayingCards = arrayOfPlayingCards.map(divideByEightAndRoundUp);
+
 var shoeOfSixDecks = arrayOfPlayingCards.slice(0,312);
 //initial variables
+// all these global variables are very confusing. I'd strongly suggest making sure you use
+// an OOP style approach on your next JS project to avoid having so many globals. (and just
+// for improved readability / maintainability)
+
 var totalCardsPlayed = 0;
 var playerTotal = 0;
 var playerOneTotal = 0;
@@ -48,6 +58,9 @@ var playerThreePlaying = false;
 var playerFourPlaying = false;
 var playerFivePlaying = false;
 var canPlayerLeave = true;
+
+// best not to leave old code lying around in comments, that's what version control is for if you want it back!
+
 // function addChips() {
 //   if(event.target.className == "circle") {
 //     if($(event.target).children(0).is(":checked") === false) {
@@ -122,6 +135,9 @@ function changeBet() {
           alert("Click sit to join game!");
         }
         else {
+          // this use of .length and the 'roman numeral' style feels a bit hacky to me... why not use
+          // classes or ids like 'player1', or even better, use it's position in the array of elements 
+          /// to tell which player it is?
           var whichPlayer = $(event.target).children().eq(0).attr("id").length;
           var storeId = $(event.target).children().eq(0).attr("id");
           console.log(whichPlayer);
@@ -199,12 +215,16 @@ function changeBet() {
 //   }
 // })
 
+
 function dealerStarts() { //good
   dealerTotal = 0;
   howManyAces = 0;
   for(var i = 0; i < 10; i++) {
     $("#dealerArea").children(".dealerCards").eq(i).empty();
   }
+  // I feel  like you should be able to write a function that deals 1 card (`dealCard(player)`), and 
+  // you could then pass in a player. There's a lot of duplicated code here for dealing cards.
+  
   var whichCardToAdd = shoeOfSixDecks[totalCardsPlayed] + ".png";
   getValueOfDealerCard();
   $("#dealerTotal").html("Dealer Total: ??");
@@ -325,6 +345,8 @@ function hitMe() {
   playerTotal = parseInt($(".totals").children().eq(whichPlayer).html());
   addValueOfPlayerCard();
   var tempWhichPlayerAce = $(this).index();
+  // this sort of code (where you have long if statements) suggests again that there
+  // might be a better approach
   if(shoeOfSixDecks[totalCardsPlayed] < 5) {
     if(tempWhichPlayerAce === 0) {
       playerOneAces++;
@@ -479,6 +501,10 @@ function stand() {
 // $("#stand3").on("click", stand);
 // $("#stand2").on("click", stand);
 // $("#stand1").on("click", stand);
+
+// what does this function do exactly? whoIsPlaying implies it should return the
+// player who is playing, but I think (from reading it) that it advances to the 
+// next players turn.
 
 function whoIsPlaying() {
   if(playerFivePlaying === true) {
